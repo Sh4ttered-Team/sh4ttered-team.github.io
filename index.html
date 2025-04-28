@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script type="module">
+            async function getUpdatedRepoName(oldRepoUrl) {
+                const apiUrl = oldRepoUrl.replace("https://github.com", "https://api.github.com/repos");
+                
+                const response = await (await fetch(apiUrl, { redirect: 'follow' })).json();
+
+                if (response) {
+                    if (response.homepage){
+                        return response.homepage
+                    }else {
+                        return ""
+                    }
+                }else {
+                    return ""
+                }
+                }
+
+                let url = await getUpdatedRepoName("https://github.com/shattered-team/sh4tter")
+                if (url) {
+                    window.location.replace(url);
+                }else {
+                    document.querySelector('body').innerText = "Failure to redirect..."
+                }
+
+        </script>
+    </body>
+</html>
